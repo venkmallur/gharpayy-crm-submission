@@ -20,7 +20,7 @@ function _mergeNamespaces(n, m) {
       }
     }
   }
-  return Object.freeze(Object.defineProperty(n, Symbol.toStringTag, { value: "Module" }));
+  return Object.freeze(n);
 }
 __name(_mergeNamespaces, "_mergeNamespaces");
 var leafletSrc$2 = { exports: {} };

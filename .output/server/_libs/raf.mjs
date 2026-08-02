@@ -1,6 +1,6 @@
 var __defProp = Object.defineProperty;
 var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
-import { c as commonjsGlobal, g as getDefaultExportFromCjs } from "./react.mjs";
+import { c as commonjsGlobal } from "./react.mjs";
 import { r as requirePerformanceNow } from "./performance-now.mjs";
 var raf = { exports: {} };
 var hasRequiredRaf;
@@ -65,8 +65,6 @@ function requireRaf() {
   return raf.exports;
 }
 __name(requireRaf, "requireRaf");
-var rafExports = requireRaf();
-const requestAnimationFrame = /* @__PURE__ */ getDefaultExportFromCjs(rafExports);
 export {
-  requestAnimationFrame as r
+  requireRaf as r
 };

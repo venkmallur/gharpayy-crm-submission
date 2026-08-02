@@ -1,5 +1,5 @@
 import { b as band, d as diverging, a as divergingLog, c as divergingPow, e as divergingSqrt, f as divergingSymlog, i as identity, g as implicit, l as linear, h as log, o as ordinal, p as point, j as pow, q as quantile, k as quantize, r as radial, s as sequential, m as sequentialLog, n as sequentialPow, t as sequentialQuantile, u as sequentialSqrt, v as sequentialSymlog, w as sqrt, x as symlog, y as threshold, z as time, A as utcTime, B as tickFormat } from "./d3-scale.mjs";
-const d3Scales = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const d3Scales = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   scaleBand: band,
   scaleDiverging: diverging,
@@ -29,7 +29,7 @@ const d3Scales = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProp
   scaleTime: time,
   scaleUtc: utcTime,
   tickFormat
-}, Symbol.toStringTag, { value: "Module" }));
+});
 export {
   d3Scales as d
 };

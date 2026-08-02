@@ -1,6 +1,5 @@
 var __defProp = Object.defineProperty;
 var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
-
 import { a as requireReact } from "./react.mjs";
 var shim = { exports: {} };
 var useSyncExternalStoreShim_production = {};

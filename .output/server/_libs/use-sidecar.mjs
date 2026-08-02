@@ -1,8 +1,7 @@
 var __defProp = Object.defineProperty;
 var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
-
 import { r as reactExports } from "./react.mjs";
-import { _ as __assign, a as __rest } from "./tslib.mjs";
+import { __assign, __rest } from "tslib";
 function ItoI(a) {
   return a;
 }

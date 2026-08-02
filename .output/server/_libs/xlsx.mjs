@@ -1,7 +1,5 @@
 var __defProp = Object.defineProperty;
 var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
-import { Buffer as Buffer2 } from "node:buffer";
-import process from "node:process";
 var XLSX = {};
 XLSX.version = "0.18.5";
 var current_codepage = 1200, current_ansi = 1252;
@@ -185,30 +183,30 @@ function Base64_decode(input) {
 }
 __name(Base64_decode, "Base64_decode");
 var has_buf = /* @__PURE__ */ (function() {
-  return typeof Buffer2 !== "undefined" && typeof process !== "undefined" && typeof process.versions !== "undefined" && !!process.versions.node;
+  return typeof Buffer !== "undefined" && typeof process !== "undefined" && typeof process.versions !== "undefined" && !!process.versions.node;
 })();
 var Buffer_from = /* @__PURE__ */ (function() {
-  if (typeof Buffer2 !== "undefined") {
-    var nbfs = !Buffer2.from;
+  if (typeof Buffer !== "undefined") {
+    var nbfs = !Buffer.from;
     if (!nbfs) try {
-      Buffer2.from("foo", "utf8");
+      Buffer.from("foo", "utf8");
     } catch (e) {
       nbfs = true;
     }
     return nbfs ? function(buf, enc) {
-      return enc ? new Buffer2(buf, enc) : new Buffer2(buf);
-    } : Buffer2.from.bind(Buffer2);
+      return enc ? new Buffer(buf, enc) : new Buffer(buf);
+    } : Buffer.from.bind(Buffer);
   }
   return function() {
   };
 })();
 function new_raw_buf(len) {
-  if (has_buf) return Buffer2.alloc ? Buffer2.alloc(len) : new Buffer2(len);
+  if (has_buf) return Buffer.alloc ? Buffer.alloc(len) : new Buffer(len);
   return typeof Uint8Array != "undefined" ? new Uint8Array(len) : new Array(len);
 }
 __name(new_raw_buf, "new_raw_buf");
 function new_unsafe_buf(len) {
-  if (has_buf) return Buffer2.allocUnsafe ? Buffer2.allocUnsafe(len) : new Buffer2(len);
+  if (has_buf) return Buffer.allocUnsafe ? Buffer.allocUnsafe(len) : new Buffer(len);
   return typeof Uint8Array != "undefined" ? new Uint8Array(len) : new Array(len);
 }
 __name(new_unsafe_buf, "new_unsafe_buf");
@@ -248,8 +246,8 @@ function ab2a(data) {
 }
 __name(ab2a, "ab2a");
 var bconcat = has_buf ? function(bufs) {
-  return Buffer2.concat(bufs.map(function(buf) {
-    return Buffer2.isBuffer(buf) ? buf : Buffer_from(buf);
+  return Buffer.concat(bufs.map(function(buf) {
+    return Buffer.isBuffer(buf) ? buf : Buffer_from(buf);
   }));
 } : function(bufs) {
   if (typeof Uint8Array !== "undefined") {
@@ -2292,7 +2290,7 @@ var CFB = /* @__PURE__ */ (/* @__PURE__ */ __name((function _CFB() {
   function read(blob, options) {
     var type = options && options.type;
     if (!type) {
-      if (has_buf && Buffer2.isBuffer(blob)) type = "buffer";
+      if (has_buf && Buffer.isBuffer(blob)) type = "buffer";
     }
     switch (type || "base64") {
       case "file":
@@ -2544,7 +2542,7 @@ var CFB = /* @__PURE__ */ (/* @__PURE__ */ __name((function _CFB() {
       file = cfb.FileIndex[i2];
       if (file.size >= 4096) {
         o.l = file.start + 1 << 9;
-        if (has_buf && Buffer2.isBuffer(file.content)) {
+        if (has_buf && Buffer.isBuffer(file.content)) {
           file.content.copy(o, o.l, 0, file.size);
           o.l += file.size + 511 & -512;
         } else {
@@ -2556,7 +2554,7 @@ var CFB = /* @__PURE__ */ (/* @__PURE__ */ __name((function _CFB() {
     for (i2 = 1; i2 < cfb.FileIndex.length; ++i2) {
       file = cfb.FileIndex[i2];
       if (file.size > 0 && file.size < 4096) {
-        if (has_buf && Buffer2.isBuffer(file.content)) {
+        if (has_buf && Buffer.isBuffer(file.content)) {
           file.content.copy(o, o.l, 0, file.size);
           o.l += file.size + 63 & -64;
         } else {
@@ -2644,7 +2642,7 @@ var CFB = /* @__PURE__ */ (/* @__PURE__ */ __name((function _CFB() {
       case "base64":
         return Base64_encode(typeof o == "string" ? o : a2s2(o));
       case "buffer":
-        if (has_buf) return Buffer2.isBuffer(o) ? o : Buffer_from(o);
+        if (has_buf) return Buffer.isBuffer(o) ? o : Buffer_from(o);
       /* falls through */
       case "array":
         return typeof o == "string" ? s2a(o) : o;
@@ -3403,7 +3401,7 @@ var CFB = /* @__PURE__ */ (/* @__PURE__ */ __name((function _CFB() {
   function parse_mad(file, options) {
     if (a2s2(file.slice(0, 13)).toLowerCase() != "mime-version:") throw new Error("Unsupported MAD header");
     var root = options && options.root || "";
-    var data = (has_buf && Buffer2.isBuffer(file) ? file.toString("binary") : a2s2(file)).split("\r\n");
+    var data = (has_buf && Buffer.isBuffer(file) ? file.toString("binary") : a2s2(file)).split("\r\n");
     var di = 0, row = "";
     for (di = 0; di < data.length; ++di) {
       row = data[di];
@@ -3458,7 +3456,7 @@ var CFB = /* @__PURE__ */ (/* @__PURE__ */ __name((function _CFB() {
         return "_u" + u.charCodeAt(0).toString(16) + "_";
       });
       var ca = fi.content;
-      var cstr = has_buf && Buffer2.isBuffer(ca) ? ca.toString("binary") : a2s2(ca);
+      var cstr = has_buf && Buffer.isBuffer(ca) ? ca.toString("binary") : a2s2(ca);
       var dispcnt = 0, L = Math.min(1024, cstr.length), cc = 0;
       for (var csl = 0; csl <= L; ++csl) if ((cc = cstr.charCodeAt(csl)) >= 32 && cc < 128) ++dispcnt;
       var qp = dispcnt >= L * 4 / 5;
@@ -3744,7 +3742,7 @@ function parseDate(str, fixdate) {
 }
 __name(parseDate, "parseDate");
 function cc2str(arr, debomit) {
-  if (has_buf && Buffer2.isBuffer(arr)) {
+  if (has_buf && Buffer.isBuffer(arr)) {
     if (debomit) {
       if (arr[0] == 255 && arr[1] == 254) return utf8write(arr.slice(2).toString("utf16le"));
       if (arr[1] == 254 && arr[2] == 255) return utf8write(utf16beread(arr.slice(2).toString("binary")));
@@ -4275,7 +4273,7 @@ function write_vt(s, xlsx) {
 __name(write_vt, "write_vt");
 function xlml_normalize(d) {
   if (has_buf && /*::typeof Buffer !== "undefined" && d != null && d instanceof Buffer &&*/
-  Buffer2.isBuffer(d)) return d.toString("utf8");
+  Buffer.isBuffer(d)) return d.toString("utf8");
   if (typeof d === "string") return d;
   if (typeof Uint8Array !== "undefined" && d instanceof Uint8Array) return utf8read(a2s(ab2a(d)));
   throw new Error("Bad input format: expected Buffer or string");
@@ -4354,8 +4352,8 @@ var ___toBuffer = /* @__PURE__ */ __name(function(bufs) {
   return x;
 }, "___toBuffer");
 var __toBuffer = has_buf ? function(bufs) {
-  return bufs[0].length > 0 && Buffer2.isBuffer(bufs[0][0]) ? Buffer2.concat(bufs[0].map(function(x) {
-    return Buffer2.isBuffer(x) ? x : Buffer_from(x);
+  return bufs[0].length > 0 && Buffer.isBuffer(bufs[0][0]) ? Buffer.concat(bufs[0].map(function(x) {
+    return Buffer.isBuffer(x) ? x : Buffer_from(x);
   })) : ___toBuffer(bufs);
 } : ___toBuffer;
 var ___utf16le = /* @__PURE__ */ __name(function(b, s, e) {
@@ -4364,7 +4362,7 @@ var ___utf16le = /* @__PURE__ */ __name(function(b, s, e) {
   return ss.join("").replace(chr0, "");
 }, "___utf16le");
 var __utf16le = has_buf ? function(b, s, e) {
-  if (!Buffer2.isBuffer(b)) return ___utf16le(b, s, e);
+  if (!Buffer.isBuffer(b)) return ___utf16le(b, s, e);
   return b.toString("utf16le", s, e).replace(chr0, "");
 } : ___utf16le;
 var ___hexlify = /* @__PURE__ */ __name(function(b, s, l) {
@@ -4373,7 +4371,7 @@ var ___hexlify = /* @__PURE__ */ __name(function(b, s, l) {
   return ss.join("");
 }, "___hexlify");
 var __hexlify = has_buf ? function(b, s, l) {
-  return Buffer2.isBuffer(b) ? b.toString("hex", s, s + l) : ___hexlify(b, s, l);
+  return Buffer.isBuffer(b) ? b.toString("hex", s, s + l) : ___hexlify(b, s, l);
 } : ___hexlify;
 var ___utf8 = /* @__PURE__ */ __name(function(b, s, e) {
   var ss = [];
@@ -4381,7 +4379,7 @@ var ___utf8 = /* @__PURE__ */ __name(function(b, s, e) {
   return ss.join("");
 }, "___utf8");
 var __utf8 = has_buf ? /* @__PURE__ */ __name(function utf8_b(b, s, e) {
-  return Buffer2.isBuffer(b) ? b.toString("utf8", s, e) : ___utf8(b, s, e);
+  return Buffer.isBuffer(b) ? b.toString("utf8", s, e) : ___utf8(b, s, e);
 }, "utf8_b") : ___utf8;
 var ___lpstr = /* @__PURE__ */ __name(function(b, i) {
   var len = __readUInt32LE(b, i);
@@ -4417,36 +4415,36 @@ var is_buf = /* @__PURE__ */ __name(function is_buf_a(a) {
 }, "is_buf_a");
 if (has_buf) {
   __lpstr = /* @__PURE__ */ __name(function lpstr_b(b, i) {
-    if (!Buffer2.isBuffer(b)) return ___lpstr(b, i);
+    if (!Buffer.isBuffer(b)) return ___lpstr(b, i);
     var len = b.readUInt32LE(i);
     return len > 0 ? b.toString("utf8", i + 4, i + 4 + len - 1) : "";
   }, "lpstr_b");
   __cpstr = /* @__PURE__ */ __name(function cpstr_b(b, i) {
-    if (!Buffer2.isBuffer(b)) return ___cpstr(b, i);
+    if (!Buffer.isBuffer(b)) return ___cpstr(b, i);
     var len = b.readUInt32LE(i);
     return len > 0 ? b.toString("utf8", i + 4, i + 4 + len - 1) : "";
   }, "cpstr_b");
   __lpwstr = /* @__PURE__ */ __name(function lpwstr_b(b, i) {
-    if (!Buffer2.isBuffer(b)) return ___lpwstr(b, i);
+    if (!Buffer.isBuffer(b)) return ___lpwstr(b, i);
     var len = 2 * b.readUInt32LE(i);
     return b.toString("utf16le", i + 4, i + 4 + len - 1);
   }, "lpwstr_b");
   __lpp4 = /* @__PURE__ */ __name(function lpp4_b(b, i) {
-    if (!Buffer2.isBuffer(b)) return ___lpp4(b, i);
+    if (!Buffer.isBuffer(b)) return ___lpp4(b, i);
     var len = b.readUInt32LE(i);
     return b.toString("utf16le", i + 4, i + 4 + len);
   }, "lpp4_b");
   __8lpp4 = /* @__PURE__ */ __name(function lpp4_8b(b, i) {
-    if (!Buffer2.isBuffer(b)) return ___8lpp4(b, i);
+    if (!Buffer.isBuffer(b)) return ___8lpp4(b, i);
     var len = b.readUInt32LE(i);
     return b.toString("utf8", i + 4, i + 4 + len);
   }, "lpp4_8b");
   __double = /* @__PURE__ */ __name(function double_(b, i) {
-    if (Buffer2.isBuffer(b)) return b.readDoubleLE(i);
+    if (Buffer.isBuffer(b)) return b.readDoubleLE(i);
     return ___double(b, i);
   }, "double_");
   is_buf = /* @__PURE__ */ __name(function is_buf_b(a) {
-    return Buffer2.isBuffer(a) || Array.isArray(a) || typeof Uint8Array !== "undefined" && a instanceof Uint8Array;
+    return Buffer.isBuffer(a) || Array.isArray(a) || typeof Uint8Array !== "undefined" && a instanceof Uint8Array;
   }, "is_buf_b");
 }
 function cpdoit() {
@@ -4503,7 +4501,7 @@ function ReadShift(size, t) {
   switch (t) {
     case "dbcs":
       loc = this.l;
-      if (has_buf && Buffer2.isBuffer(this)) o = this.slice(this.l, this.l + 2 * size).toString("utf16le");
+      if (has_buf && Buffer.isBuffer(this)) o = this.slice(this.l, this.l + 2 * size).toString("utf16le");
       else for (i = 0; i < size; ++i) {
         o += String.fromCharCode(__readUInt16LE(this, loc));
         loc += 2;
@@ -9326,7 +9324,7 @@ var SYLK = /* @__PURE__ */ (function() {
       case "binary":
         return sylk_to_aoa_str(d, opts);
       case "buffer":
-        return sylk_to_aoa_str(has_buf && Buffer2.isBuffer(d) ? d.toString("binary") : a2s(d), opts);
+        return sylk_to_aoa_str(has_buf && Buffer.isBuffer(d) ? d.toString("binary") : a2s(d), opts);
       case "array":
         return sylk_to_aoa_str(cc2str(d), opts);
     }
@@ -9591,7 +9589,7 @@ var DIF = /* @__PURE__ */ (function() {
       case "binary":
         return dif_to_aoa_str(d, opts);
       case "buffer":
-        return dif_to_aoa_str(has_buf && Buffer2.isBuffer(d) ? d.toString("binary") : a2s(d), opts);
+        return dif_to_aoa_str(has_buf && Buffer.isBuffer(d) ? d.toString("binary") : a2s(d), opts);
       case "array":
         return dif_to_aoa_str(cc2str(d), opts);
     }
@@ -10044,7 +10042,7 @@ var PRN = /* @__PURE__ */ (function() {
       case "buffer":
         if (opts.codepage == 65001) str = d.toString("utf8");
         else if (opts.codepage && typeof $cptable !== "undefined") str = $cptable.utils.decode(opts.codepage, d);
-        else str = has_buf && Buffer2.isBuffer(d) ? d.toString("binary") : a2s(d);
+        else str = has_buf && Buffer.isBuffer(d) ? d.toString("binary") : a2s(d);
         break;
       case "array":
         str = cc2str(d);
@@ -11904,7 +11902,7 @@ var RTF = /* @__PURE__ */ (function() {
       case "binary":
         return rtf_to_sheet_str(d, opts);
       case "buffer":
-        return rtf_to_sheet_str(has_buf && Buffer2.isBuffer(d) ? d.toString("binary") : a2s(d), opts);
+        return rtf_to_sheet_str(has_buf && Buffer.isBuffer(d) ? d.toString("binary") : a2s(d), opts);
       case "array":
         return rtf_to_sheet_str(cc2str(d), opts);
     }
@@ -31744,7 +31742,7 @@ __name(read_cfb, "read_cfb");
 function read_zip(data, opts) {
   var zip, d = data;
   var o = opts || {};
-  if (!o.type) o.type = has_buf && Buffer2.isBuffer(data) ? "buffer" : "base64";
+  if (!o.type) o.type = has_buf && Buffer.isBuffer(data) ? "buffer" : "base64";
   zip = zip_read(d, o);
   return parse_zip(zip, o);
 }
@@ -31820,7 +31818,7 @@ function readSync(data, opts) {
   }
   _ssfopts = {};
   if (o.dateNF) _ssfopts.dateNF = o.dateNF;
-  if (!o.type) o.type = has_buf && Buffer2.isBuffer(data) ? "buffer" : "base64";
+  if (!o.type) o.type = has_buf && Buffer.isBuffer(data) ? "buffer" : "base64";
   if (o.type == "file") {
     o.type = has_buf ? "buffer" : "binary";
     d = read_binary(data);

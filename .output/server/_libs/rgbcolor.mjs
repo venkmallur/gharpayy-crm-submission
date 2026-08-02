@@ -1,6 +1,5 @@
 var __defProp = Object.defineProperty;
 var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
-import { g as getDefaultExportFromCjs } from "./react.mjs";
 var rgbcolor;
 var hasRequiredRgbcolor;
 function requireRgbcolor() {
@@ -277,8 +276,6 @@ function requireRgbcolor() {
   return rgbcolor;
 }
 __name(requireRgbcolor, "requireRgbcolor");
-var rgbcolorExports = requireRgbcolor();
-const RGBColor$1 = /* @__PURE__ */ getDefaultExportFromCjs(rgbcolorExports);
 export {
-  RGBColor$1 as R
+  requireRgbcolor as r
 };

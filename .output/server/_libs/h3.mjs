@@ -10,9 +10,8 @@ var __privateGet = (obj, member, getter) => (__accessCheck(obj, member, "read fr
 var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot add the same private member more than once") : member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
 var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
 var _a, _b, _c, _headers, _init, _d, _e, _f;
-import "./unenv.mjs";
 import { N as NullProtoObj } from "./rou3.mjs";
-import { F as FastURL, a as FastResponse } from "./srvx.mjs";
+import { F as FastURL, N as NodeResponse } from "./srvx.mjs";
 function decodePathname(pathname) {
   return decodeURI(pathname.includes("%25") ? pathname.replace(/%25/g, "%2525") : pathname);
 }
@@ -214,7 +213,7 @@ var HTTPResponse = (_d = class {
   }
 }, _headers = new WeakMap(), _init = new WeakMap(), __name(_d, "HTTPResponse"), _d);
 function prepareResponse(val, event, config, nested) {
-  if (val === kHandled) return new FastResponse(null);
+  if (val === kHandled) return new NodeResponse(null);
   if (val === kNotFound) val = new HTTPError({
     status: 404,
     message: `Cannot find any route matching [${event.req.method}] ${event.url}`
@@ -237,7 +236,7 @@ function prepareResponse(val, event, config, nested) {
   if (!(val instanceof Response)) {
     const res = prepareResponseBody(val, event, config);
     const status = res.status || preparedRes?.status;
-    return new FastResponse(nullBody(event.req.method, status) ? null : res.body, {
+    return new NodeResponse(nullBody(event.req.method, status) ? null : res.body, {
       status,
       statusText: res.statusText || preparedRes?.statusText,
       headers: res.headers && preparedHeaders ? mergeHeaders$1(res.headers, preparedHeaders) : res.headers || preparedHeaders
@@ -247,13 +246,13 @@ function prepareResponse(val, event, config, nested) {
   if (preparedHeaders && !nested) try {
     mergeHeaders$1(val.headers, preparedHeaders, val.headers);
   } catch {
-    return new FastResponse(nullBody(event.req.method, val.status) ? null : val.body, {
+    return new NodeResponse(nullBody(event.req.method, val.status) ? null : val.body, {
       status: val.status,
       statusText: val.statusText,
       headers: mergeHeaders$1(val.headers, preparedHeaders)
     });
   }
-  return event.req.method === "HEAD" && val.body !== null ? new FastResponse(null, {
+  return event.req.method === "HEAD" && val.body !== null ? new NodeResponse(null, {
     status: val.status,
     statusText: val.statusText,
     headers: val.headers
@@ -323,7 +322,7 @@ __name(nullBody, "nullBody");
 function errorResponse(error, debug, errHeaders) {
   let headers = error.headers ? mergeHeaders$1(jsonHeaders, error.headers) : new Headers(jsonHeaders);
   if (errHeaders) headers = mergeHeaders$1(headers, errHeaders);
-  return new FastResponse(JSON.stringify({
+  return new NodeResponse(JSON.stringify({
     ...error.toJSON(),
     stack: debug && error.stack ? error.stack.split("\n").map((l) => l.trim()) : void 0
   }, void 0, debug ? 2 : void 0), {
@@ -493,7 +492,9 @@ function routeHandler(route) {
 __name(routeHandler, "routeHandler");
 export {
   HTTPError as H,
-  H3Core as a,
-  defineLazyEventHandler as d,
-  toRequest as t
+  defineLazyEventHandler as a,
+  H3Core as b,
+  toRequest as c,
+  defineHandler as d,
+  toEventHandler as t
 };

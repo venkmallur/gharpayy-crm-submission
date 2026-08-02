@@ -2,7 +2,6 @@ var __defProp = Object.defineProperty;
 var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
 import { r as reactExports, j as jsxRuntimeExports } from "./react.mjs";
 import { i as isGenerator, c as calcGeneratorDuration, m as maxGeneratorDuration, g as generateLinearEasing, a as isBezierDefinition, b as mapEasingToNativeEasing, s as supportsLinearEasing, d as attachTimeline, e as isWaapiSupportedEasing, f as getValueTransition, G as GroupPlaybackControls, h as isPrimaryPointer, j as setDragLock, k as hover, p as press } from "./motion-dom.mjs";
-import { p as performance } from "./unenv.mjs";
 import { n as noop, m as millisecondsToSeconds, s as secondsToMilliseconds, i as invariant, p as progress, a as memo } from "./motion-utils.mjs";
 const LayoutGroupContext = reactExports.createContext({});
 function useConstant(init) {

@@ -1,6 +1,5 @@
 var __defProp = Object.defineProperty;
 var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
-import process from "node:process";
 import { AsyncLocalStorage } from "node:async_hooks";
 import { H as H3Event, t as toResponse } from "../_libs/h3-v2.mjs";
 import { q as resolveManifestAssetLink, j as rootRouteId, u as parseRedirect, v as mergeHeaders, l as isRedirect, w as defaultSerovalPlugins, x as makeSerovalPlugin, y as getNormalizedURL, z as getOrigin, A as attachRouterServerSsrUtils, C as isResolvedRedirect, D as executeRewriteInput, E as defineHandlerCallback, F as createSerializationAdapter, G as createRawStreamRPCPlugin, i as invariant, g as isNotFound } from "../_libs/tanstack__router-core.mjs";
@@ -8,21 +7,21 @@ import { a as au, I as Iu, o as ou } from "../_libs/seroval.mjs";
 import { c as createMemoryHistory } from "../_libs/tanstack__history.mjs";
 import { j as jsxRuntimeExports } from "../_libs/react.mjs";
 import { R as RouterProvider, r as renderRouterToStream } from "../_libs/tanstack__react-router.mjs";
-import "../_libs/unenv.mjs";
-
-
-
-
 import "../_libs/rou3.mjs";
 import "../_libs/srvx.mjs";
-
-
-
-
+import "node:http";
+import "node:stream";
+import "node:stream/promises";
+import "node:https";
+import "node:http2";
 import "../_libs/cookie-es.mjs";
 import "../_libs/seroval-plugins.mjs";
-
+import "node:stream/web";
 import "../_libs/react-dom.mjs";
+import "util";
+import "crypto";
+import "async_hooks";
+import "stream";
 import "../_libs/isbot.mjs";
 var __defProp2 = Object.defineProperty;
 var __name2 = /* @__PURE__ */ __name((target, value) => __defProp2(target, "name", { value, configurable: true }), "__name");
@@ -951,7 +950,7 @@ var baseManifestPromise;
 var cachedFinalManifestPromise;
 async function loadEntries() {
   const [routerEntry, startEntry, pluginAdapters] = await Promise.all([
-    import("./router-xBhBcQRf.mjs").then((n) => n.aT),
+    import("./router-Cbs6ivkN.mjs").then((n) => n.aT),
     import("./start-HYkvq4Ni.mjs"),
     import("../__23tanstack-start-plugin-adapters-Cwee5PKy.mjs")
   ]);

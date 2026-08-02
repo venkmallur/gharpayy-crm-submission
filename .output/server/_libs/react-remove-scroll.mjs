@@ -1,6 +1,6 @@
 var __defProp = Object.defineProperty;
 var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
-import { a as __rest, _ as __assign, b as __spreadArray } from "./tslib.mjs";
+import { __rest, __assign, __spreadArray } from "tslib";
 import { r as reactExports } from "./react.mjs";
 import { z as zeroRightClassName, f as fullWidthClassName, R as RemoveScrollBar } from "./react-remove-scroll-bar.mjs";
 import { c as createSidecarMedium, e as exportSidecar } from "./use-sidecar.mjs";

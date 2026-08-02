@@ -1,6 +1,5 @@
 var __defProp = Object.defineProperty;
 var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
-import process from "node:process";
 function _mergeNamespaces(n, m) {
   for (var i = 0; i < m.length; i++) {
     const e = m[i];
@@ -20,7 +19,7 @@ function _mergeNamespaces(n, m) {
       }
     }
   }
-  return Object.freeze(Object.defineProperty(n, Symbol.toStringTag, { value: "Module" }));
+  return Object.freeze(n);
 }
 __name(_mergeNamespaces, "_mergeNamespaces");
 var commonjsGlobal = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : {};
@@ -28,6 +27,36 @@ function getDefaultExportFromCjs(x) {
   return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, "default") ? x["default"] : x;
 }
 __name(getDefaultExportFromCjs, "getDefaultExportFromCjs");
+function getAugmentedNamespace(n) {
+  if (Object.prototype.hasOwnProperty.call(n, "__esModule")) return n;
+  var f = n.default;
+  if (typeof f == "function") {
+    var a = /* @__PURE__ */ __name(function a2() {
+      var isInstance = false;
+      try {
+        isInstance = this instanceof a2;
+      } catch {
+      }
+      if (isInstance) {
+        return Reflect.construct(f, arguments, this.constructor);
+      }
+      return f.apply(this, arguments);
+    }, "a");
+    a.prototype = f.prototype;
+  } else a = {};
+  Object.defineProperty(a, "__esModule", { value: true });
+  Object.keys(n).forEach(function(k) {
+    var d = Object.getOwnPropertyDescriptor(n, k);
+    Object.defineProperty(a, k, d.get ? d : {
+      enumerable: true,
+      get: /* @__PURE__ */ __name(function() {
+        return n[k];
+      }, "get")
+    });
+  });
+  return a;
+}
+__name(getAugmentedNamespace, "getAugmentedNamespace");
 var react = { exports: {} };
 var react_production = {};
 var hasRequiredReact_production;
@@ -533,6 +562,7 @@ export {
   requireReact as a,
   React$1 as b,
   commonjsGlobal as c,
+  getAugmentedNamespace as d,
   getDefaultExportFromCjs as g,
   jsxRuntimeExports as j,
   reactExports as r

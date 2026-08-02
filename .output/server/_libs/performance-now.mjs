@@ -1,7 +1,5 @@
 var __defProp = Object.defineProperty;
 var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
-import { p as performance } from "./unenv.mjs";
-import process from "node:process";
 var performanceNow$1 = { exports: {} };
 var performanceNow = performanceNow$1.exports;
 var hasRequiredPerformanceNow;

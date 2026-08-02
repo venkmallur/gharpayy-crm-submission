@@ -335,7 +335,7 @@ const symbolWye = {
     context.closePath();
   }
 };
-function Symbol$1(type, size) {
+function Symbol2(type, size) {
   let context = null, path = withPath(symbol);
   type = typeof type === "function" ? type : constant(type || symbolCircle);
   size = typeof size === "function" ? size : constant(size === void 0 ? 64 : +size);
@@ -357,7 +357,7 @@ function Symbol$1(type, size) {
   };
   return symbol;
 }
-__name(Symbol$1, "Symbol$1");
+__name(Symbol2, "Symbol");
 function noop() {
 }
 __name(noop, "noop");
@@ -868,7 +868,7 @@ __name(stackOffsetWiggle, "stackOffsetWiggle");
 export {
   curveBasisOpen as A,
   curveBasisClosed as B,
-  Symbol$1 as S,
+  Symbol2 as S,
   symbolTriangle as a,
   symbolStar as b,
   symbolSquare as c,

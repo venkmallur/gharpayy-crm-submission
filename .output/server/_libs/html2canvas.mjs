@@ -1,5 +1,6 @@
 var __defProp = Object.defineProperty;
 var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
+import { d as getAugmentedNamespace } from "./react.mjs";
 var extendStatics = /* @__PURE__ */ __name(function(d, b) {
   extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d2, b2) {
     d2.__proto__ = b2;
@@ -7825,6 +7826,11 @@ var parseBackgroundColor = /* @__PURE__ */ __name(function(context, element, bac
   var defaultBackgroundColor = typeof backgroundColorOverride === "string" ? parseColor(context, backgroundColorOverride) : backgroundColorOverride === null ? COLORS.TRANSPARENT : 4294967295;
   return element === ownerDocument.documentElement ? isTransparent(documentBackgroundColor) ? isTransparent(bodyBackgroundColor) ? defaultBackgroundColor : bodyBackgroundColor : documentBackgroundColor : defaultBackgroundColor;
 }, "parseBackgroundColor");
+const html2canvas_esm = /* @__PURE__ */ Object.freeze({
+  __proto__: null,
+  default: html2canvas
+});
+const require$$4 = /* @__PURE__ */ getAugmentedNamespace(html2canvas_esm);
 export {
-  html2canvas as default
+  require$$4 as r
 };
