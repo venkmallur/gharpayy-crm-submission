@@ -20,6 +20,7 @@ import {
 import { QuotationBuilder } from "@/components/crm10x/QuotationBuilder";
 import { SmartDossier } from "@/components/crm10x/SmartDossier";
 import { LeadPropertyDossier } from "@/components/impact/LeadPropertyDossier";
+import { MagicFollowup } from "@/myt/components/MagicFollowup";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -752,6 +753,9 @@ export function CommandActions({
     <div className="space-y-3">
       {/* Interested properties — what the lead is leaning toward */}
       <InterestedPropertiesPicker lead={lead} />
+
+      {/* Magic AI Follow-up Generator */}
+      <MagicFollowup lead={lead} />
 
       {/* Template messenger */}
       <TemplateMessenger

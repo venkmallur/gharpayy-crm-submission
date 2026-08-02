@@ -10,6 +10,7 @@ import type {
 import { newUlid, normalizePhoneIN, normalizeEmail, parseBudgetToNumber } from "./normalize";
 import { findMatches } from "./similarity";
 import { useAuditLog } from "@/lib/audit-log";
+import { saveLead } from "@/lib/backend-leads";
 
 /** Mirror a lead-store mutation into the universal audit log. */
 function audit(action: string, ulid: string, summary: string, actor: { id: string; name: string }, before?: unknown, after?: unknown) {
@@ -163,6 +164,7 @@ export const useIdentityStore = create<IdentityStore>()(
           rawSource: draft.rawSource,
         };
         set((s) => ({ leads: [lead, ...s.leads] }));
+        saveLead({ data: lead }).catch((err) => console.error("Failed to sync lead to backend:", err));
         get().logActivity(lead.ulid, "lead-created", `Lead created by ${ownerName}`);
         audit("lead-created", lead.ulid, `Lead created · ${lead.name}`, user, undefined, lead.name);
         return lead;

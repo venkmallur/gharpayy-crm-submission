@@ -2,10 +2,12 @@ import { useMemo, useState } from 'react';
 import { useAppState } from '@/myt/lib/app-context';
 import { scoreProperty } from '@/myt/lib/scoring';
 import { PropertyCard } from '@/myt/components/PropertyCard';
+import { PropertyMap } from '@/myt/components/PropertyMap';
+import { DemandHeatmap } from '@/myt/components/DemandHeatmap';
 import { SignalChip } from '@/myt/components/SignalChip';
 import { UrgencyTimer } from '@/myt/components/UrgencyTimer';
 import { zones } from '@/myt/lib/mock-data';
-import { Search, Building2, Lock, Plus, Sparkles } from 'lucide-react';
+import { Search, Building2, Lock, Plus, Sparkles, MapIcon, LayoutGrid } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
@@ -39,6 +41,7 @@ export default function PropertyCommandCenter() {
 
   const [search, setSearch] = useState('');
   const [signalFilter, setSignalFilter] = useState<'all' | 'hot' | 'balanced' | 'cold'>('all');
+  const [viewMode, setViewMode] = useState<'list' | 'map'>('list');
   const [selected, setSelected] = useState<Property | null>(null);
   const [addOpen, setAddOpen] = useState(false);
 
@@ -94,12 +97,17 @@ export default function PropertyCommandCenter() {
       </div>
 
       {!isEmpty && (
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-2">
-          <SummaryTile label="🔥 Hot" value={totals.hot} />
-          <SummaryTile label="❄️ Cold" value={totals.cold} />
-          <SummaryTile label="Beds Held" value={totals.blockedBeds} />
-          <SummaryTile label="Revenue (7d)" value={`₹${(totals.revenue / 1000).toFixed(0)}k`} />
-          <SummaryTile label="Missed (7d)" value={`₹${(totals.missed / 1000).toFixed(0)}k`} accent="danger" />
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <div className="lg:col-span-2 grid grid-cols-2 md:grid-cols-5 gap-2 content-start">
+            <SummaryTile label="🔥 Hot" value={totals.hot} />
+            <SummaryTile label="❄️ Cold" value={totals.cold} />
+            <SummaryTile label="Beds Held" value={totals.blockedBeds} />
+            <SummaryTile label="Revenue (7d)" value={`₹${(totals.revenue / 1000).toFixed(0)}k`} />
+            <SummaryTile label="Missed (7d)" value={`₹${(totals.missed / 1000).toFixed(0)}k`} accent="danger" />
+          </div>
+          <div className="lg:col-span-1">
+            <DemandHeatmap />
+          </div>
         </div>
       )}
 
@@ -128,6 +136,26 @@ export default function PropertyCommandCenter() {
               </button>
             ))}
           </div>
+          <div className="flex gap-1 ml-auto">
+            <button
+              onClick={() => setViewMode('list')}
+              className={cn(
+                'px-3 h-9 rounded-md text-[11px] font-medium flex items-center gap-1.5 transition-colors',
+                viewMode === 'list' ? 'bg-primary text-primary-foreground' : 'bg-surface-2 text-muted-foreground hover:bg-surface-3'
+              )}
+            >
+              <LayoutGrid className="h-3.5 w-3.5" /> List
+            </button>
+            <button
+              onClick={() => setViewMode('map')}
+              className={cn(
+                'px-3 h-9 rounded-md text-[11px] font-medium flex items-center gap-1.5 transition-colors',
+                viewMode === 'map' ? 'bg-primary text-primary-foreground' : 'bg-surface-2 text-muted-foreground hover:bg-surface-3'
+              )}
+            >
+              <MapIcon className="h-3.5 w-3.5" /> Map
+            </button>
+          </div>
         </div>
       )}
 
@@ -135,11 +163,18 @@ export default function PropertyCommandCenter() {
         <EmptyState onAdd={() => setAddOpen(true)} />
       ) : (
         <>
-          <div className="grid gap-2 md:grid-cols-2 lg:grid-cols-3">
-            {scoredProps.map(({ p, s }) => (
-              <PropertyCard key={p.id} property={p} scores={s} onClick={() => setSelected(p)} />
-            ))}
-          </div>
+          {viewMode === 'list' ? (
+            <div className="grid gap-2 md:grid-cols-2 lg:grid-cols-3">
+              {scoredProps.map(({ p, s }) => (
+                <PropertyCard key={p.id} property={p} scores={s} onClick={() => setSelected(p)} />
+              ))}
+            </div>
+          ) : (
+            <PropertyMap 
+              properties={scoredProps.map(sp => sp.p)} 
+              onSelect={setSelected} 
+            />
+          )}
           {scoredProps.length === 0 && (
             <div className="glass-card p-8 text-center text-sm text-muted-foreground">
               No properties match these filters.

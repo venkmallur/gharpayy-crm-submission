@@ -17,6 +17,7 @@ import { DuplicateModal } from "./DuplicateModal";
 
 interface Props {
   onCreated?: (lead: UnifiedLead) => void;
+  initialDraft?: ParsedLeadDraft;
 }
 
 const emptyDraft = (): ParsedLeadDraft => ({
@@ -33,11 +34,11 @@ const NEED_OPTIONS = ["Boys", "Girls", "Coed", "Any"];
 const phoneOk = (v: string) => v.replace(/\D/g, "").length >= 10;
 const emailOk = (v: string) => !v || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 
-export function DirectLeadForm({ onCreated }: Props) {
+export function DirectLeadForm({ onCreated, initialDraft }: Props) {
   const checkDuplicates = useIdentityStore((s) => s.checkDuplicates);
   const createLead = useIdentityStore((s) => s.createLead);
 
-  const [draft, setDraft] = useState<ParsedLeadDraft>(emptyDraft());
+  const [draft, setDraft] = useState<ParsedLeadDraft>(initialDraft || emptyDraft());
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [match, setMatch] = useState<MatchResult | null>(null);
   const [showModal, setShowModal] = useState(false);

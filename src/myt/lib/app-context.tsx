@@ -30,11 +30,11 @@ interface AppState {
 const AppContext = createContext<AppState | null>(null);
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
-  const [tours, setTours] = useState<Tour[]>(initialTours);
-  const [leads, setLeads] = useState<Lead[]>(initialLeads);
-  const [bookings, setBookings] = useState<Booking[]>(initialBookings);
-  const [rooms, setRooms] = useState<Room[]>(initialRooms);
-  const [blocks, setBlocks] = useState<RoomBlock[]>(initialBlocks);
+  const [tours, setTours] = useState<Tour[]>([]);
+  const [leads, setLeads] = useState<Lead[]>([]);
+  const [bookings, setBookings] = useState<Booking[]>([]);
+  const [rooms, setRooms] = useState<Room[]>([]);
+  const [blocks, setBlocks] = useState<RoomBlock[]>([]);
   const [managedProperties, setManagedProperties] = useState<Property[]>([]);
   const [managedRooms, setManagedRooms] = useState<Room[]>([]);
   const [currentRole, setCurrentRole] = useState<Role>('hr');

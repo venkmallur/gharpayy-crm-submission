@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: gharpayy-crm
+    env: node
+    region: singapore # Closest to India for low latency
+    buildCommand: npm install && npm run build
+    startCommand: node .output/server/index.mjs
+    disk:
+      name: gharpayy-data
+      mountPath: /opt/render/project/src/.data
+      sizeGB: 1

@@ -90,14 +90,14 @@ export const useApp = create<AppState>((set, get) => ({
   selectedLeadTab: null,
   selectLead: (id, tab = null) => set({ selectedLeadId: id, selectedLeadTab: tab }),
 
-  tcms: TCMS,
-  properties: PROPERTIES,
-  leads: LEADS,
-  tours: TOURS,
-  activities: ACTIVITIES,
-  followUps: FOLLOWUPS,
-  handoffs: HANDOFFS,
-  sequences: SEQUENCES_INIT,
+  tcms: TCMS, // keeping TCMS as they might be needed for the app to function if no TCM creation exists yet
+  properties: [],
+  leads: [],
+  tours: [],
+  activities: [],
+  followUps: [],
+  handoffs: [],
+  sequences: [],
   bookings: [],
 
   setLeadStage: (leadId, stage) => {

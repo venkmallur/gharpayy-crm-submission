@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { ClipboardPaste, Search, CheckCircle2, AlertCircle, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { DuplicateModal } from "./DuplicateModal";
+import { DirectLeadForm } from "./DirectLeadForm";
 
 interface Props {
   onCreated?: (lead: UnifiedLead) => void;
@@ -120,69 +121,22 @@ export function PasteToLead({ onCreated }: Props) {
           className="min-h-32 font-mono text-xs"
         />
       </div>
-
       {parsed && (
-        <div className="rounded-xl border border-border bg-card p-4 space-y-3">
-          <div className="flex items-center justify-between flex-wrap gap-2">
-            <h3 className="font-semibold text-sm">Review parsed fields</h3>
-            {draft.zone && <Badge variant="secondary" className="text-[10px]">Zone · {draft.zone}</Badge>}
+        <div className="mt-4 animate-in slide-in-from-bottom-2 fade-in duration-300">
+          <div className="mb-3 flex items-center gap-2 text-sm text-primary font-medium">
+            <CheckCircle2 className="h-4 w-4" /> Parsed successfully. Please review and save.
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div>
-              <Label className="text-[11px]"><Dot on={detected.name} />Name</Label>
-              <Input value={draft.name} onChange={(e) => updateField("name", e.target.value)} className="h-9 text-sm" />
-            </div>
-            <div>
-              <Label className="text-[11px]"><Dot on={detected.phone} />Phone</Label>
-              <Input value={draft.phone} onChange={(e) => updateField("phone", e.target.value)} className="h-9 text-sm" />
-            </div>
-            <div>
-              <Label className="text-[11px]"><Dot on={detected.email} />Email</Label>
-              <Input value={draft.email} onChange={(e) => updateField("email", e.target.value)} className="h-9 text-sm" />
-            </div>
-            <div>
-              <Label className="text-[11px]"><Dot on={detected.location} />Location / Area</Label>
-              <Input value={draft.location} onChange={(e) => updateField("location", e.target.value)} className="h-9 text-sm" />
-            </div>
-            <div>
-              <Label className="text-[11px]"><Dot on={detected.budget} />Budget</Label>
-              <Input value={draft.budget} onChange={(e) => updateField("budget", e.target.value)} className="h-9 text-sm" placeholder="e.g. 8-12k" />
-            </div>
-            <div>
-              <Label className="text-[11px]"><Dot on={detected.moveIn} />Move-in</Label>
-              <Input value={draft.moveIn} onChange={(e) => updateField("moveIn", e.target.value)} className="h-9 text-sm" />
-            </div>
-            <div>
-              <Label className="text-[11px]">Type</Label>
-              <Input value={draft.type} onChange={(e) => updateField("type", e.target.value)} className="h-9 text-sm" placeholder="Student / Working" />
-            </div>
-            <div>
-              <Label className="text-[11px]">Room</Label>
-              <Input value={draft.room} onChange={(e) => updateField("room", e.target.value)} className="h-9 text-sm" placeholder="Private / Shared / Both" />
-            </div>
-          </div>
-
-          <div className="text-[11px] text-muted-foreground flex items-center gap-2">
-            {Object.values(detected).filter(Boolean).length >= 3 ? (
-              <><CheckCircle2 className="h-3.5 w-3.5 text-primary" /> Enough signals to dedup safely</>
-            ) : (
-              <><AlertCircle className="h-3.5 w-3.5 text-warning" /> Add more fields for stronger dedup confidence</>
-            )}
-          </div>
-
-          <Button onClick={onCheckAndSave} className="w-full h-10 gap-2" disabled={!draft.name && !draft.phone && !draft.email}>
-            <Search className="h-4 w-4" /> Check duplicates & save
-          </Button>
+          <DirectLeadForm 
+            initialDraft={draft} 
+            onCreated={(lead) => {
+              setRaw("");
+              setDraft(emptyDraft());
+              setParsed(false);
+              onCreated?.(lead);
+            }} 
+          />
         </div>
       )}
-
-      <DuplicateModal
-        open={showModal}
-        onClose={() => setShowModal(false)}
-        result={match}
-        onForceCreate={onForceCreate}
-        onUseExisting={onUseExisting}
-      />
     </div>
   );
 }
