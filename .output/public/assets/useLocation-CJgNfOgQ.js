@@ -1,0 +1,1 @@
+var a=Object.defineProperty;var u=(r,e)=>a(r,"name",{value:e,configurable:!0});import{bJ as c,r as i,bK as p,bL as l}from"./index-DprFVEuD.js";function b(r){const e=c(),t=i.useRef(void 0);return p(e.stores.location,n=>{const o=n;if(e.options.defaultStructuralSharing){const s=l(t.current,o);return t.current=s,s}return o})}u(b,"useLocation");export{b as u};

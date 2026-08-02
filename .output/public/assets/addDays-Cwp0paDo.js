@@ -1,0 +1,1 @@
+var i=Object.defineProperty;var e=(r,t)=>i(r,"name",{value:t,configurable:!0});import{t as n,l as o}from"./personas-C1iSjgT4.js";function D(r,t,s){const a=n(r,s?.in);return isNaN(t)?o(r,NaN):(t&&a.setDate(a.getDate()+t),a)}e(D,"addDays");export{D as a};

@@ -1,0 +1,1 @@
+var c=Object.defineProperty;var r=(e,s)=>c(e,"name",{value:s,configurable:!0});import{r as u,aD as t}from"./index-DprFVEuD.js";function p(e,s=50){const[o,n]=u.useState([]);return u.useEffect(()=>(n(t.recent(e,s)),t.subscribe(()=>{n(t.recent(e,s))})),[e,s]),o}r(p,"useGlueEvents");export{p as u};
